@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  logic-tests:
+    name: Logic unit tests (PC)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build tests
+        run: g++ -std=c++11 -Wall -Wextra -Werror -I parking_assistant tests/test_logic.cpp -o test_logic
+      - name: Run tests
+        run: ./test_logic
+
+  compile-sketch:
+    name: Compile sketch for Arduino Uno
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/compile-sketches@v1
+        with:
+          fqbn: arduino:avr:uno
+          sketch-paths: |
+            - parking_assistant
+          libraries: |
+            - name: LiquidCrystal I2C
+            - name: LiquidCrystal
