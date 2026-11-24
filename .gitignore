@@ -1,0 +1,11 @@
+# Build output
+test_logic
+test_logic.exe
+*.o
+build/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
